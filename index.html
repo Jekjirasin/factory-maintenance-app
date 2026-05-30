@@ -289,7 +289,7 @@
 
     <script>
         // ใส่ลิงก์ Web App URL ของคุณเรียบร้อยแล้วครับ
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwfhvkwmE026SGBO5SPDIs_x9MJGNvioyAyPzvfi84fkjA2pU0TUU2jUi8bv6mKdTA5oQ/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwUhPL56mwwgSr7VjDGQ1ZheU0YOc02Cnr_dyp40_sYwUkhUDQPUfdTyT_7GDsZc_gTEA/exec";
 
         let base64ImageString = "";
 
@@ -350,32 +350,40 @@
             btn.innerText = "กำลังบันทึกข้อมูลและอัปโหลดรูปภาพ...";
             btn.disabled = true;
 
+            // เปลี่ยนมาใช้สไตล์มาตรฐานของ Google Web App
             fetch(WEB_APP_URL, {
                 method: 'POST',
-                mode: 'no-cors',
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
+                // เอา mode: 'no-cors' ออก เพื่อให้ส่งข้อมูลรูปภาพไปได้
                 body: JSON.stringify(data)
             })
-                .then(() => {
-                    const successMsg = document.createElement('div');
-                    successMsg.innerText = "🎉 บันทึกสำเร็จเรียบร้อย!";
-                    successMsg.style.cssText = "position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:15px;border-radius:8px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-weight:600;";
-                    document.body.appendChild(successMsg);
+                // รับผลลัพธ์กลับมาเช็ค (เพราะเปิด CORS แล้วจะได้รับ Response คืนมา)
+                .then(res => res.json())
+                .then(result => {
+                    if (result.result === "success") {
+                        const successMsg = document.createElement('div');
+                        successMsg.innerText = "🎉 บันทึกสำเร็จเรียบร้อย!";
+                        successMsg.style.cssText = "position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:15px;border-radius:8px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-weight:600;";
+                        document.body.appendChild(successMsg);
 
-                    setTimeout(() => {
-                        successMsg.style.opacity = '0';
-                        successMsg.style.transition = 'opacity 0.5s';
-                        setTimeout(() => document.body.removeChild(successMsg), 500);
-                    }, 3000);
+                        setTimeout(() => {
+                            successMsg.style.opacity = '0';
+                            successMsg.style.transition = 'opacity 0.5s';
+                            setTimeout(() => document.body.removeChild(successMsg), 500);
+                        }, 3000);
 
-                    document.getElementById(formId).reset();
-                    if (formId === 'logForm') {
-                        document.getElementById('imgPreview').style.display = 'none';
-                        base64ImageString = "";
+                        document.getElementById(formId).reset();
+                        if (formId === 'logForm') {
+                            document.getElementById('imgPreview').style.display = 'none';
+                            base64ImageString = "";
+                        }
+                    } else {
+                        alert("เกิดข้อผิดพลาดจากระบบ: " + result.error);
                     }
                 })
-                .catch(err => alert("เกิดข้อผิดพลาด: " + err))
+                .catch(err => {
+                    console.error(err);
+                    alert("เกิดข้อผิดพลาดในการเชื่อมต่อเครือข่าย");
+                })
                 .finally(() => {
                     btn.innerText = originalBtnText;
                     btn.disabled = false;
