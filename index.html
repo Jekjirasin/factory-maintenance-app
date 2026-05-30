@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบซ่อมบำรุงโรงงาน</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f6f9; padding: 20px; margin: 0; }
+        .container { max-width: 600px; margin: 20px auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #007bff; color: white; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        .tab-btn { padding: 10px 20px; cursor: pointer; background: #ddd; border: none; margin-right: 5px; border-radius: 4px 4px 0 0; }
+        .tab-btn.active { background: #007bff; color: white; }
+        .form-panel { display: none; }
+        .form-panel.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <button class="tab-btn active" onclick="switchTab('machinePanel', this)">➕ เพิ่มเครื่องจักรใหม่</button>
+    <button class="tab-btn" onclick="switchTab('logPanel', this)">🛠️ บันทึกการซ่อม</button>
+</div>
+
+<div id="machinePanel" class="container form-panel active">
+    <h2>➕ ลงทะเบียนเครื่องจักรใหม่</h2>
+    <form id="machineForm">
+        <div class="form-group">
+            <label>รหัสเครื่องจักร (Machine ID):</label>
+            <input type="text" id="mId" placeholder="เช่น CR-01" required>
+        </div>
+        <div class="form-group">
+            <label>ชื่อเครื่องจักร (Machine Name):</label>
+            <input type="text" id="mName" placeholder="เช่น เครื่องกลึง" required>
+        </div>
+        <div class="form-group">
+            <label>สถานที่ติดตั้ง (Location):</label>
+            <input type="text" id="mLoc" placeholder="เช่น ไลน์ผลิต A" required>
+        </div>
+        <div class="form-group">
+            <label>สถานะเริ่มต้น (Status):</label>
+            <select id="mStatus">
+                <option value="พร้อมใช้งาน">พร้อมใช้งาน</option>
+                <option value="กำลังซ่อม">กำลังซ่อม</option>
+            </select>
+        </div>
+        <button type="submit">บันทึกข้อมูลเครื่องจักร</button>
+    </form>
+</div>
+
+<div id="logPanel" class="container form-panel">
+    <h2>🛠️ บันทึกประวัติการซ่อมแซม</h2>
+    <form id="logForm">
+        <div class="form-group">
+            <label>รหัสเครื่องจักร (Machine ID):</label>
+            <input type="text" id="lMachineId" placeholder="เช่น CR-01" required>
+        </div>
+        <div class="form-group">
+            <label>รายละเอียดการซ่อม/อาการเสีย (Issue):</label>
+            <textarea id="lIssue" rows="3" placeholder="ระบุอาการและการแก้ไข" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>ชื่อช่างผู้ซ่อม (Technician):</label>
+            <input type="text" id="lTech" placeholder="ชื่อช่างบำรุงรักษา" required>
+        </div>
+        <div class="form-group">
+            <label>สถานะงาน (Job Status):</label>
+            <select id="lStatus">
+                <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+                <option value="รออะไหล่">รออะไหล่</option>
+            </select>
+        </div>
+        <button type="submit">บันทึกประวัติการซ่อม</button>
+    </form>
+</div>
+
+<script>
+    // ⚠️ วางลิงก์ Web App URL ของคุณที่ได้จากขั้นตอนที่ 1 ตรงนี้ครับ
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwKINPSJLEKP727uJO8mpwFFntYJCW0aK9JGv2Ucnhg23NNSlxuHJT-L66MfB9MWa8GlQ/exec";
+
+    // ฟังก์ชันสลับหน้าจอ ฟอร์ม
+    function switchTab(panelId, btn) {
+        document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(panelId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // ส่งข้อมูลฟอร์มเครื่องจักร
+    document.getElementById('machineForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            formType: "machine",
+            machineId: document.getElementById('mId').value,
+            machineName: document.getElementById('mName').value,
+            location: document.getElementById('mLoc').value,
+            status: document.getElementById('mStatus').value
+        };
+        sendData(data, 'machineForm');
+    });
+
+    // ส่งข้อมูลฟอร์มประวัติซ่อม
+    document.getElementById('logForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const now = new Date();
+        const data = {
+            formType: "log",
+            logId: "LOG-" + now.getTime().toString().slice(-6), // เจนรหัสสุ่มจากเวลา
+            machineId: document.getElementById('lMachineId').value,
+            date: now.toLocaleString('th-TH'),
+            issue: document.getElementById('lIssue').value,
+            technician: document.getElementById('lTech').value,
+            jobStatus: document.getElementById('lStatus').value
+        };
+        sendData(data, 'logForm');
+    });
+
+    // ฟังก์ชันยิงข้อมูลไป Google Sheets
+    function sendData(data, formId) {
+        const btn = document.querySelector(`#${formId} button`);
+        btn.innerText = "กำลังบันทึกข้อมูล...";
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // จำเป็นสำหรับ Google Apps Script
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            alert("บันทึกข้อมูลลง Google Sheets สำเร็จ!");
+            document.getElementById(formId).reset();
+        })
+        .catch(err => alert("เกิดข้อผิดพลาด: " + err))
+        .finally(() => {
+            btn.innerText = "บันทึกข้อมูล";
+            btn.disabled = false;
+        });
+    }
+</script>
+
+</body>
+</html>
