@@ -288,7 +288,7 @@
     </div>
 
     <script>
-        // ใส่ลิงก์ Web App URL ของคุณเรียบร้อยแล้วครับ
+        // เปลี่ยนลิงก์ Web App URL ของคุณที่นี่
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwUhPL56mwwgSr7VjDGQ1ZheU0YOc02Cnr_dyp40_sYwUkhUDQPUfdTyT_7GDsZc_gTEA/exec";
 
         let base64ImageString = "";
@@ -316,6 +316,7 @@
             }
         }
 
+        // จัดการ Submit ฟอร์มเครื่องจักร
         document.getElementById('machineForm').addEventListener('submit', function (e) {
             e.preventDefault();
             sendData({
@@ -327,6 +328,7 @@
             }, 'machineForm');
         });
 
+        // จัดการ Submit ฟอร์มประวัติการซ่อม
         document.getElementById('logForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const now = new Date();
@@ -344,19 +346,17 @@
             }, 'logForm');
         });
 
+        // ฟังก์ชันหลักในการส่งข้อมูลไปยัง Google Web App
         function sendData(data, formId) {
             const btn = document.querySelector(`#${formId} button`);
             const originalBtnText = btn.innerText;
             btn.innerText = "กำลังบันทึกข้อมูลและอัปโหลดรูปภาพ...";
             btn.disabled = true;
 
-            // เปลี่ยนมาใช้สไตล์มาตรฐานของ Google Web App
             fetch(WEB_APP_URL, {
                 method: 'POST',
-                // เอา mode: 'no-cors' ออก เพื่อให้ส่งข้อมูลรูปภาพไปได้
                 body: JSON.stringify(data)
             })
-                // รับผลลัพธ์กลับมาเช็ค (เพราะเปิด CORS แล้วจะได้รับ Response คืนมา)
                 .then(res => res.json())
                 .then(result => {
                     if (result.result === "success") {
@@ -377,12 +377,12 @@
                             base64ImageString = "";
                         }
                     } else {
-                        alert("เกิดข้อผิดพลาดจากระบบ: " + result.error);
+                        alert("เกิดข้อผิดพลาดจากเซิร์ฟเวอร์: " + result.error);
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    alert("เกิดข้อผิดพลาดในการเชื่อมต่อเครือข่าย");
+                    alert("เกิดข้อผิดพลาดในการรับ-ส่งข้อมูล หรือปัญหาทางเครือข่าย");
                 })
                 .finally(() => {
                     btn.innerText = originalBtnText;
