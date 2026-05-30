@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,10 +23,8 @@
             color: var(--text-color);
             padding: 20px;
             margin: 0;
-            line-height: 1.6;
         }
 
-        /* ตกแต่งส่วนหัวข้อหลัก */
         h1 {
             text-align: center;
             color: #333;
@@ -33,7 +32,6 @@
             font-weight: 600;
         }
 
-        /* สไตล์สำหรับส่วนเลือกแท็บ */
         .tab-container {
             display: flex;
             max-width: 650px;
@@ -47,7 +45,6 @@
             cursor: pointer;
             background: none;
             border: none;
-            outline: none;
             font-size: 16px;
             font-weight: 500;
             color: var(--secondary-color);
@@ -55,7 +52,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px; /* เว้นระยะไอคอนกับข้อความ */
+            gap: 8px;
         }
 
         .tab-btn.active {
@@ -69,19 +66,16 @@
             background-color: rgba(0, 123, 255, 0.05);
         }
 
-        /* Container หลักสำหรับฟอร์ม */
         .container {
             max-width: 650px;
             margin: 30px auto;
             background: var(--card-background);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* เงาจางๆ */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
-        /* ตกแต่งหัวข้อในฟอร์ม */
         h2 {
-            color: var(--text-color);
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 15px;
             margin-top: 0;
@@ -90,7 +84,6 @@
             font-size: 20px;
         }
 
-        /* สไตล์สำหรับ Form Group */
         .form-group {
             margin-bottom: 20px;
         }
@@ -103,8 +96,10 @@
             font-size: 14px;
         }
 
-        /* สไตล์สำหรับ Input, Select, Textarea */
-        input[type="text"], select, textarea {
+        input[type="text"],
+        input[type="file"],
+        select,
+        textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid var(--border-color);
@@ -112,22 +107,22 @@
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
             font-size: 15px;
-            transition: border-color 0.2s;
         }
 
-        input[type="text"]:focus, select:focus, textarea:focus {
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
             border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); /* ไฮไลท์ตอนเลือก */
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
 
-        /* เพิ่มไอคอนเล็กๆ ใน input เพื่อให้ดูดีขึ้น */
         .input-icon-group {
             position: relative;
         }
-        
+
         .input-icon-group input {
-            padding-left: 40px; /* เว้นที่ด้านซ้าย */
+            padding-left: 40px;
         }
 
         .input-icon {
@@ -139,7 +134,6 @@
             font-size: 18px;
         }
 
-        /* ตกแต่งปุ่ม */
         button[type="submit"] {
             background-color: var(--primary-color);
             color: white;
@@ -150,16 +144,12 @@
             font-size: 16px;
             font-weight: 600;
             width: 100%;
-            transition: background-color 0.2s, transform 0.1s;
+            transition: all 0.2s;
             margin-top: 10px;
         }
 
         button[type="submit"]:hover {
             background-color: #0069d9;
-        }
-
-        button[type="submit"]:active {
-            transform: translateY(1px); /* เอฟเฟกต์ตอนกด */
         }
 
         button[type="submit"]:disabled {
@@ -168,200 +158,231 @@
             opacity: 0.7;
         }
 
-        /* สไตล์สำหรับสถานะเสร็จสิ้น/รออะไหล่ */
-        select#mStatus option[value="พร้อมใช้งาน"],
-        select#lStatus option[value="เสร็จสิ้น"] {
-            color: var(--success-color);
-            font-weight: 500;
-        }
-        
-        select#mStatus option[value="กำลังซ่อม"],
-        select#lStatus option[value="รออะไหล่"] {
-            color: #dc3545;
-            font-weight: 500;
-        }
-
-        /* สำหรับการแสดงผลฟอร์ม */
         .form-panel {
             display: none;
-            animation: fadeIn 0.4s; /* เอฟเฟกต์เฟดอิน */
+            animation: fadeIn 0.4s;
         }
 
         .form-panel.active {
             display: block;
         }
 
-        /* ฟังก์ชันอนิเมชั่นเฟดอิน */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+            border: 1px solid #ddd;
         }
 
-        /* ปรับปรุงให้เหมาะกับมือถือ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            .container { padding: 20px; border-radius: 8px; }
-            .tab-btn { font-size: 14px; padding: 12px 5px; }
-            h2 { font-size: 18px; }
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .tab-btn {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<h1>🛠️ ระบบซ่อมบำรุงโรงงาน</h1>
+    <h1>🛠️ ระบบซ่อมบำรุงโรงงาน</h1>
 
-<div class="tab-container">
-    <button class="tab-btn active" onclick="switchTab('machinePanel', this)">
-        <span>➕</span> เพิ่มเครื่องจักรใหม่
-    </button>
-    <button class="tab-btn" onclick="switchTab('logPanel', this)">
-        <span>🛠️</span> บันทึกการซ่อม
-    </button>
-</div>
+    <div class="tab-container">
+        <button class="tab-btn active" onclick="switchTab('machinePanel', this)"><span>➕</span>
+            เพิ่มเครื่องจักรใหม่</button>
+        <button class="tab-btn" onclick="switchTab('logPanel', this)"><span>🛠️</span> บันทึกการซ่อม</button>
+    </div>
 
-<div id="machinePanel" class="container form-panel active">
-    <h2>➕ ลงทะเบียนเครื่องจักรใหม่</h2>
-    <form id="machineForm">
-        <div class="form-group">
-            <label>รหัสเครื่องจักร (Machine ID):</label>
-            <div class="input-icon-group">
-                <span class="input-icon">🆔</span>
-                <input type="text" id="mId" placeholder="เช่น CR-01" required>
+    <div id="machinePanel" class="container form-panel active">
+        <h2>➕ ลงทะเบียนเครื่องจักรใหม่</h2>
+        <form id="machineForm">
+            <div class="form-group">
+                <label>รหัสเครื่องจักร (Machine ID):</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">🆔</span>
+                    <input type="text" id="mId" placeholder="เช่น CR-01" required>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label>ชื่อเครื่องจักร (Machine Name):</label>
-            <div class="input-icon-group">
-                <span class="input-icon">⚙️</span>
-                <input type="text" id="mName" placeholder="เช่น เครื่องกลึง" required>
+            <div class="form-group">
+                <label>ชื่อเครื่องจักร (Machine Name):</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">⚙️</span>
+                    <input type="text" id="mName" placeholder="เช่น เครื่องกลึง" required>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label>สถานที่ติดตั้ง (Location):</label>
-            <div class="input-icon-group">
-                <span class="input-icon">📍</span>
-                <input type="text" id="mLoc" placeholder="เช่น ไลน์ผลิต A" required>
+            <div class="form-group">
+                <label>สถานที่ติดตั้ง (Location):</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">📍</span>
+                    <input type="text" id="mLoc" placeholder="เช่น ไลน์ผลิต A" required>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label>สถานะเริ่มต้น (Status):</label>
-            <select id="mStatus">
-                <option value="พร้อมใช้งาน">🟢 พร้อมใช้งาน</option>
-                <option value="กำลังซ่อม">🔴 กำลังซ่อม</option>
-            </select>
-        </div>
-        <button type="submit">บันทึกข้อมูลเครื่องจักร</button>
-    </form>
-</div>
-
-<div id="logPanel" class="container form-panel">
-    <h2>🛠️ บันทึกประวัติการซ่อมแซม</h2>
-    <form id="logForm">
-        <div class="form-group">
-            <label>รหัสเครื่องจักร (Machine ID):</label>
-            <div class="input-icon-group">
-                <span class="input-icon">🆔</span>
-                <input type="text" id="lMachineId" placeholder="เช่น CR-01" required>
+            <div class="form-group">
+                <label>สถานะเริ่มต้น (Status):</label>
+                <select id="mStatus">
+                    <option value="พร้อมใช้งาน">🟢 พร้อมใช้งาน</option>
+                    <option value="กำลังซ่อม">🔴 กำลังซ่อม</option>
+                </select>
             </div>
-        </div>
-        <div class="form-group">
-            <label>รายละเอียดการซ่อม/อาการเสีย (Issue):</label>
-            <textarea id="lIssue" rows="4" placeholder="ระบุอาการเสีย สาเหตุ และการแก้ไขที่ทำไป" required></textarea>
-        </div>
-        <div class="form-group">
-            <label>ชื่อช่างผู้ซ่อม (Technician):</label>
-            <div class="input-icon-group">
-                <span class="input-icon">🔧</span>
-                <input type="text" id="lTech" placeholder="ชื่อช่างบำรุงรักษา" required>
+            <button type="submit">บันทึกข้อมูลเครื่องจักร</button>
+        </form>
+    </div>
+
+    <div id="logPanel" class="container form-panel">
+        <h2>🛠️ บันทึกประวัติการซ่อมแซม</h2>
+        <form id="logForm">
+            <div class="form-group">
+                <label>รหัสเครื่องจักร (Machine ID):</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">🆔</span>
+                    <input type="text" id="lMachineId" placeholder="เช่น CR-01" required>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label>สถานะงาน (Job Status):</label>
-            <select id="lStatus">
-                <option value="เสร็จสิ้น">✅ เสร็จสิ้น</option>
-                <option value="รออะไหล่">⏳ รออะไหล่</option>
-            </select>
-        </div>
-        <button type="submit">บันทึกประวัติการซ่อม</button>
-    </form>
-</div>
+            <div class="form-group">
+                <label>รายละเอียดการซ่อม/อาการเสีย (Issue):</label>
+                <textarea id="lIssue" rows="4" placeholder="ระบุอาการเสีย สาเหตุ และการแก้ไขที่ทำไป"
+                    required></textarea>
+            </div>
+            <div class="form-group">
+                <label>ชื่อช่างผู้ซ่อม (Technician):</label>
+                <div class="input-icon-group">
+                    <span class="input-icon">🔧</span>
+                    <input type="text" id="lTech" placeholder="ชื่อช่างบำรุงรักษา" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>สถานะงาน (Job Status):</label>
+                <select id="lStatus">
+                    <option value="เสร็จสิ้น">✅ เสร็จสิ้น</option>
+                    <option value="รออะไหล่">⏳ รออะไหล่</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>📸 ถ่ายรูปหรือแนบรูปภาพอาการเสีย:</label>
+                <input type="file" id="lPhoto" accept="image/*" onchange="previewImage(this)">
+                <img id="imgPreview" class="preview-img" alt="ตัวอย่างรูปภาพ">
+            </div>
+            <button type="submit">บันทึกประวัติการซ่อม</button>
+        </form>
+    </div>
 
-<script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwKINPSJLEKP727uJO8mpwFFntYJCW0aK9JGv2Ucnhg23NNSlxuHJT-L66MfB9MWa8GlQ/exec";
+    <script>
+        // ใส่ลิงก์ Web App URL ของคุณเรียบร้อยแล้วครับ
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwfhvkwmE026SGBO5SPDIs_x9MJGNvioyAyPzvfi84fkjA2pU0TUU2jUi8bv6mKdTA5oQ/exec";
 
-    // ฟังก์ชันสลับหน้าจอ ฟอร์ม
-    function switchTab(panelId, btn) {
-        document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(panelId).classList.add('active');
-        btn.classList.add('active');
-    }
+        let base64ImageString = "";
 
-    // ส่งข้อมูลฟอร์มเครื่องจักร
-    document.getElementById('machineForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const data = {
-            formType: "machine",
-            machineId: document.getElementById('mId').value,
-            machineName: document.getElementById('mName').value,
-            location: document.getElementById('mLoc').value,
-            status: document.getElementById('mStatus').value
-        };
-        sendData(data, 'machineForm');
-    });
+        function switchTab(panelId, btn) {
+            document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(panelId).classList.add('active');
+            btn.classList.add('active');
+        }
 
-    // ส่งข้อมูลฟอร์มประวัติซ่อม
-    document.getElementById('logForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const now = new Date();
-        const data = {
-            formType: "log",
-            logId: "LOG-" + now.getTime().toString().slice(-6), // เจนรหัสสุ่มจากเวลา
-            machineId: document.getElementById('lMachineId').value,
-            date: now.toLocaleString('th-TH'),
-            issue: document.getElementById('lIssue').value,
-            technician: document.getElementById('lTech').value,
-            jobStatus: document.getElementById('lStatus').value
-        };
-        sendData(data, 'logForm');
-    });
+        function previewImage(input) {
+            const preview = document.getElementById('imgPreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    base64ImageString = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+                base64ImageString = "";
+            }
+        }
 
-    // ฟังก์ชันยิงข้อมูลไป Google Sheets
-    function sendData(data, formId) {
-        const btn = document.querySelector(`#${formId} button`);
-        const originalBtnText = btn.innerText;
-        btn.innerText = "กำลังบันทึกข้อมูล...";
-        btn.disabled = true;
-
-        fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors', // จำเป็นสำหรับ Google Apps Script
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            // สร้างเอฟเฟกต์แจ้งเตือนแบบง่ายๆ
-            const successMsg = document.createElement('div');
-            successMsg.innerText = "🎉 บันทึกสำเร็จ!";
-            successMsg.style.cssText = "position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:15px;border-radius:8px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-weight:600;";
-            document.body.appendChild(successMsg);
-            
-            setTimeout(() => {
-                successMsg.style.opacity = '0';
-                successMsg.style.transition = 'opacity 0.5s';
-                setTimeout(() => document.body.removeChild(successMsg), 500);
-            }, 3000);
-
-            document.getElementById(formId).reset();
-        })
-        .catch(err => alert("เกิดข้อผิดพลาด: " + err))
-        .finally(() => {
-            btn.innerText = originalBtnText;
-            btn.disabled = false;
+        document.getElementById('machineForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            sendData({
+                formType: "machine",
+                machineId: document.getElementById('mId').value,
+                machineName: document.getElementById('mName').value,
+                location: document.getElementById('mLoc').value,
+                status: document.getElementById('mStatus').value
+            }, 'machineForm');
         });
-    }
-</script>
+
+        document.getElementById('logForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const now = new Date();
+            const logId = "LOG-" + now.getTime().toString().slice(-6);
+
+            sendData({
+                formType: "log",
+                logId: logId,
+                machineId: document.getElementById('lMachineId').value,
+                date: now.toLocaleString('th-TH'),
+                issue: document.getElementById('lIssue').value,
+                technician: document.getElementById('lTech').value,
+                jobStatus: document.getElementById('lStatus').value,
+                imageFile: base64ImageString
+            }, 'logForm');
+        });
+
+        function sendData(data, formId) {
+            const btn = document.querySelector(`#${formId} button`);
+            const originalBtnText = btn.innerText;
+            btn.innerText = "กำลังบันทึกข้อมูลและอัปโหลดรูปภาพ...";
+            btn.disabled = true;
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(() => {
+                    const successMsg = document.createElement('div');
+                    successMsg.innerText = "🎉 บันทึกสำเร็จเรียบร้อย!";
+                    successMsg.style.cssText = "position:fixed;top:20px;right:20px;background:#28a745;color:white;padding:15px;border-radius:8px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-weight:600;";
+                    document.body.appendChild(successMsg);
+
+                    setTimeout(() => {
+                        successMsg.style.opacity = '0';
+                        successMsg.style.transition = 'opacity 0.5s';
+                        setTimeout(() => document.body.removeChild(successMsg), 500);
+                    }, 3000);
+
+                    document.getElementById(formId).reset();
+                    if (formId === 'logForm') {
+                        document.getElementById('imgPreview').style.display = 'none';
+                        base64ImageString = "";
+                    }
+                })
+                .catch(err => alert("เกิดข้อผิดพลาด: " + err))
+                .finally(() => {
+                    btn.innerText = originalBtnText;
+                    btn.disabled = false;
+                });
+        }
+    </script>
 
 </body>
+
 </html>
